@@ -1,0 +1,40 @@
+body{
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: #1c2a4f;
+}
+
+.naveJog{
+    width: 60px;
+    height: 60px;
+    background-image: url("nave.gif");
+    position: absolute;
+}
+
+.telaMsg{
+    position: absolute;
+    margin: -25%;
+    top: 50px;
+    left: 50%;
+    width: 720px;
+    height: 621px;
+    display: none;
+}
+#medidorPlaneta{
+  border: 2px solid #000;
+  width: 300px;
+  height: 16px;
+  background-color: #36e34d;
+}
+#barraPlaneta{
+  width: 300px;
+  height: 16px;
+  background-color: #1f822c;
+}
+.tiroJog{
+    width: 6px;
+    height: 6px;
+    background-color: darkorange;
+    border-radius: 6px;
+    position: absolute;
+}
