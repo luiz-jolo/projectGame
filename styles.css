@@ -7,7 +7,7 @@ body{
 .naveJog{
     width: 60px;
     height: 60px;
-    background-image: url("nave.gif");
+    background-image: url("nave2.gif");
     position: absolute;
 }
 
@@ -37,4 +37,22 @@ body{
     background-color: darkorange;
     border-radius: 6px;
     position: absolute;
+}
+.bomba{
+    width: 30px;
+    height: 30px;
+    background-image: url("bombaCirculo.png");
+    position: absolute;
+}
+.explosaoChao{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    background-image: url("explosao6060_chao.gif");
+}
+.explosaoAr{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    background-image: url("explosao6060_2.gif");
 }
