@@ -1,12 +1,11 @@
 var dirYJ, dirXJ, jog, velJ, pJX, pJY;
-var tamanhoW, tamanhoH;
-var jogo;
-var frames;
+var tamanhoW, tamanhoH, jogo, frames;
 var velT;
 var contBombas, painelContBombas,velB,tmpCriaBomba;
 var bombasTotal;
-var vidaPlaneta;
+var vidaPlaneta, barraPlaneta;
 var ie, isom; //indice som e indice explosao
+var telaMsg;
 
 function teclaDown() {
     var tecla=event.keyCode;
@@ -190,6 +189,23 @@ function criaExplosao(tipo,x,y) {//TIPO = 1 AR, TIPO 2 = TERRA
     ie++;
     isom++;
 }
+function gerenciaGame() {
+    // ele verifica qd diminui a vida, ele altera o tamanho da barra
+    barraPlaneta.style.width=vidaPlaneta+"px";
+    //qd as bombas chegar na quantidade final e o jogador estiver jogando ele ganhou
+    if (contBombas<=0){
+        jogo-false;
+        clearInterval(tmpCriaBomba);
+        telaMsg.style.backgroundImage="url('ImagemVitoria.png')";
+        telaMsg.style.display="block";
+    }
+    if (vidaPlaneta<=0){
+        jogo-false;
+        clearInterval(tmpCriaBomba);
+        telaMsg.style.backgroundImage="url('ImagemDerrota.png')";
+        telaMsg.style.display="block";
+    }
+}
 
 function gameLoop(){
     if (jogo){
@@ -198,11 +214,34 @@ function gameLoop(){
         controleTiros();
         controlaBomba();
     }
+    gerenciaGame();
     //estrutura de frames do jogo
     frames = requestAnimationFrame(gameLoop);
 }
+function reinicia() {
+    bombasTotal=document.getElementsByClassName("bomba");
+    var tam=bombasTotal.length;
+    for(var i=0; i<tam;i++){
+        if(bombasTotal[i]){
+            bombasTotal[i].remove();
+        }
+    }
+    telaMsg.style.display="none";
+    clearInterval(tmpCriaBomba);
+    cancelAnimationFrame(frames);
+    vidaPlaneta=260;
+    pJX=tamanhoW/2;
+    pJY=tamanhoH/2;
+    jog.style.top=pJY+"px";
+    jog.style.left=pJX+"px";
+    contBombas=150;
+    jogo=true;
+    tmpCriaBomba=setInterval(criaBomba, 1700);
+    gameLoop();
+}
+
 function inicia(){
-    jogo = true;
+    jogo = false;
     //inicialização de tela a partir do tamanho da tela
     tamanhoH=window.innerHeight;
     tamanhoW=window.innerWidth;
@@ -212,23 +251,27 @@ function inicia(){
     //posicionar jogador no meio da tela
     pJY=tamanhoH/2;
     pJX=tamanhoW/2;
-    velJ=5;
+    velJ=7;
     velT=5;
     velB=3;
     jog=document.getElementById("naveJog");
     jog.style.top=pJY+"px";
     jog.style.left=pJX+"px";
     //controles das bombas
-    clearInterval(tmpCriaBomba);
-    contBombas=150;
-    tmpCriaBomba=setInterval(criaBomba, 1700);
 
-    vidaPlaneta=80;
+    contBombas=150;
+
+
+    vidaPlaneta=260;
+    barraPlaneta=document.getElementById("barraPlaneta");
+    barraPlaneta.style.width=vidaPlaneta+"px";
     //inicializando indices som e expl
     ie=isom=0;
-
-
-    gameLoop();
+    //telas
+    telaMsg=document.getElementById("telaMsg");
+    telaMsg.style.backgroundImage="url('ImagemInicial.png')";
+    telaMsg.style.display="block";
+    document.getElementById("btnJogar").addEventListener("click", reinicia);
 }
 
 window.addEventListener("load", inicia);
